@@ -1,11 +1,11 @@
-function submitChannel() {
-    const channelURL = document.querySelector('.channel-input').value;
-    fetch('http://localhost:3000/creators', {
+function submitItem() {
+    const itemURL = document.querySelector('.item-input').value;
+    fetch('http://localhost:3000/item', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({channelURL})
+        body: JSON.stringify({itemURL})
     })    
 }
 
@@ -19,22 +19,23 @@ function newElement(type, attributes={}) {
     return element;
 }
 
-async function loadCreators() {
-    const result = await fetch('http://localhost:3000/creators');
-    const creators = await result.json();
+async function loadItem() {
+    const result = await fetch('http://localhost:3000/item');
+    const item = await result.json();
 
     const container = document.querySelector('.container');
 
-    creators.forEach(creator => {
-        const card = newElement('div', {class: 'card'});
-        const title = newElement('h4', {innerText: creator.name});
-        const img = newElement('img', {src: creator.img});
-        img.style.width = '100px';
-        card.appendChild(title);
-        card.appendChild(img);
-        container.appendChild(card);
-    })
+    const card = newElement('div', {class: 'card'});
+    const title = newElement('h4', {innerText: item.name});
+    const price = newElement('h4', {innerText: item.price});
+    const img = newElement('img', {src: item.img});
+    img.style.width = '100px';
+    card.appendChild(title);
+    card.appendChild(price);
+    card.appendChild(img);
+    container.appendChild(card);
+
 }
 
-loadCreators();
+loadItem();
 
